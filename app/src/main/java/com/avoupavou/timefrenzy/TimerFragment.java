@@ -2,6 +2,7 @@ package com.avoupavou.timefrenzy;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +53,8 @@ public class TimerFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private MediaPlayer clickAudio;
+
 
     public TimerFragment() {
         // Required empty public constructor
@@ -95,6 +98,7 @@ public class TimerFragment extends Fragment {
         bestScoreTextView = view.findViewById(R.id.text_score_value);
 
         View mainView = view.findViewById(R.id.mainView);
+        clickAudio = MediaPlayer.create(this.getContext(),R.raw.click);
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -110,12 +114,6 @@ public class TimerFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -149,8 +147,7 @@ public class TimerFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
     }
 
 
@@ -168,6 +165,7 @@ public class TimerFragment extends Fragment {
             startTimer();
             gameState = RUNNING_STATE;
         }else if (gameState == RUNNING_STATE){
+            clickAudio.start();
             mainTimer.cancel();
             Bundle b = countingTask.getLastMoment();
             int score = calculateScore(b);
