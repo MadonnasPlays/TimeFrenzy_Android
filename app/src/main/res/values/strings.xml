@@ -8,4 +8,9 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="settings">settings</string>
     <string name="credits">Credits</string>
+    <string name="logo">logo</string>
+    <string name="best_score">Best Score:</string>
+    <string name="zero">0</string>
+    <string name="semicolon">:</string>
+    <string name="three_zero">000</string>
 </resources>

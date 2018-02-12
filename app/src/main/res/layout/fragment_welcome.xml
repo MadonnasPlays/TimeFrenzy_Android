@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/frame_title"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
@@ -21,21 +20,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/text_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/app_name"
-                android:textAlignment="center"
-                android:textColor="@color/textColor"
-                android:textSize="36sp"/>
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:textSize="46sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/image_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    </FrameLayout>
+        <ImageView
+            android:id="@+id/image_logo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/logo"
+            android:src="@drawable/renctacle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraint_play_menu"
@@ -68,9 +88,9 @@
             android:id="@+id/button_levels"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginVertical="10dp"
             android:background="@color/colorAccent"
             android:text="@string/levels"
             android:textColor="@color/textColor"
@@ -87,9 +107,9 @@
             android:id="@+id/button_competitive"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginVertical="10dp"
             android:background="@color/colorAccent"
             android:text="@string/competitive"
             android:textColor="@color/textColor"
@@ -118,18 +138,19 @@
 
 
         <ImageButton
-            android:id="@+id/button8"
+            android:id="@+id/button_leaderboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/round_button"
+            android:contentDescription="@string/leaderboard"
             android:padding="5dp"
-            android:scaleType="center"
 
+            android:scaleType="center"
             android:src="@drawable/ic_games_leaderboards_white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button9"
+            app:layout_constraintEnd_toStartOf="@+id/button_settings"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -137,37 +158,39 @@
             app:layout_constraintVertical_chainStyle="packed" />
 
         <ImageButton
-            android:id="@+id/button9"
+            android:id="@+id/button_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/round_button"
+            android:contentDescription="@string/settings"
             android:padding="5dp"
             android:scaleType="center"
             android:src="@drawable/ic_settings_white_48dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button10"
+            app:layout_constraintEnd_toStartOf="@+id/button_credits"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button8"
+            app:layout_constraintStart_toEndOf="@+id/button_leaderboard"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.20999998"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <ImageButton
-            android:id="@+id/button10"
+            android:id="@+id/button_credits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/round_button"
+            android:contentDescription="@string/credits"
             android:padding="5dp"
             android:scaleType="center"
             android:src="@drawable/ic_info_outline_white_48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button9"
+            app:layout_constraintStart_toEndOf="@+id/button_settings"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.19"
             app:layout_constraintVertical_chainStyle="packed" />
