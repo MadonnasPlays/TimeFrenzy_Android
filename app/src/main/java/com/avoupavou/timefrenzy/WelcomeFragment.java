@@ -1,16 +1,16 @@
 package com.avoupavou.timefrenzy;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import java.util.List;
+import android.widget.ImageView;
 
 
 /**
@@ -30,6 +30,7 @@ public class WelcomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    AnimationDrawable logoAnimation;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,6 +81,11 @@ public class WelcomeFragment extends Fragment {
             }
 
         });
+
+        ImageView logoImage = (ImageView) view.findViewById(R.id.image_logo);
+        //logoImage.setBackgroundResource(R.drawable.logo_animation);
+        logoAnimation = (AnimationDrawable) logoImage.getDrawable();
+        logoAnimation.start();
         return view;
     }
 

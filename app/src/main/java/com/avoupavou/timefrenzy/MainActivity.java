@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
         // Commit the transaction
         transaction.commit();
 
-        sIsMuted = false;
+        sIsMuted = true;
 
         ToggleButton muteButton = findViewById(R.id.toggleButton_mute);
         muteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

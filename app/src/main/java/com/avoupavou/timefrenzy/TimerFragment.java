@@ -3,7 +3,9 @@ package com.avoupavou.timefrenzy;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.media.VolumeShaper;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -99,6 +101,7 @@ public class TimerFragment extends Fragment {
 
         View mainView = view.findViewById(R.id.mainView);
         clickAudio = MediaPlayer.create(this.getContext(),R.raw.click);
+        clickAudio.setVolume(0.5f,0.5f);
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
