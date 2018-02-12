@@ -1,15 +1,15 @@
 package com.avoupavou.timefrenzy;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
@@ -70,8 +70,8 @@ public class WelcomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
-        Button b = (Button) view.findViewById(R.id.button_levels);
-        b.setOnClickListener(new View.OnClickListener() {
+        Button levelsButton = (Button) view.findViewById(R.id.button_levels);
+        levelsButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -82,8 +82,19 @@ public class WelcomeFragment extends Fragment {
 
         });
 
+        ImageButton settingsButton = (ImageButton) view.findViewById(R.id.button_settings);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsButtonClicked();
+                }
+            }
+
+        });
+
         ImageView logoImage = (ImageView) view.findViewById(R.id.image_logo);
-        //logoImage.setBackgroundResource(R.drawable.logo_animation);
         logoAnimation = (AnimationDrawable) logoImage.getDrawable();
         logoAnimation.start();
         return view;
@@ -118,6 +129,7 @@ public class WelcomeFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onPlayButtonClicked();
+        void onSettingsButtonClicked();
     }
 
 }

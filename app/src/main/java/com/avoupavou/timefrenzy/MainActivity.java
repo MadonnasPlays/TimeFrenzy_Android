@@ -1,25 +1,25 @@
 package com.avoupavou.timefrenzy;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity implements WelcomeFragment.OnFragmentInteractionListener {
 
     private static final String LOG_TAG = "MAIN_ACTIVITY";
+    private static final String PREFS_NAME = "basicPrefs";
 
     FragmentManager mFragmentManager;
     private MediaPlayer mainAudio;
 
-    private static boolean sIsMuted;
+    private static boolean mSilentMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,35 +31,37 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
 
         // Create new fragment and transaction
         Fragment welcomeFragment = new WelcomeFragment();
-        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager = getFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack
-        transaction.add(R.id.fragment_container, welcomeFragment);
+        //transaction.replace(R.id.fragment_container, welcomeFragment);
+        transaction.add(R.id.fragment_container,welcomeFragment);
         // Commit the transaction
         transaction.commit();
 
-        sIsMuted = true;
+
+        //Share preferences init
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, 0);
+        mSilentMode = sharedPreferences.getBoolean("silentMode",false);
+        setMuteMusic(mSilentMode);
 
         ToggleButton muteButton = findViewById(R.id.toggleButton_mute);
+
+        muteButton.setChecked(mSilentMode);
+
         muteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if(mainAudio!= null && mainAudio.isPlaying()){
-                        mainAudio.stop();
-                        mainAudio.release();
-                        mainAudio =null;
-                        sIsMuted = true;
-                    }
+                    //muted
+                    setMuteMusic(true);
+                    saveMuteMusic(true);
+
                 } else {
-                    if(mainAudio == null){
-                        mainAudio = MediaPlayer.create(MainActivity.this, R.raw.startbig1);
-                        mainAudio.setVolume(0.5f, 0.5f);
-                        mainAudio.setLooping(true);
-                        mainAudio.start();
-                        sIsMuted = false;
-                    }
+                    //unmuted
+                    saveMuteMusic(false);
+                    setMuteMusic(false);
                 }
             }
 
@@ -68,9 +70,36 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
 
     }
 
+
+    private void setMuteMusic(boolean mute){
+        if(mute){
+            if(mainAudio!= null && mainAudio.isPlaying()){
+                mainAudio.stop();
+                mainAudio.release();
+                mainAudio =null;
+                mSilentMode = true;
+            }
+        }else{
+            if(mainAudio == null){
+                mainAudio = MediaPlayer.create(MainActivity.this, R.raw.startbig1);
+                mainAudio.setVolume(0.5f, 0.5f);
+                mainAudio.setLooping(true);
+                mainAudio.start();
+                mSilentMode = false;
+            }
+        }
+    }
+
+    private void saveMuteMusic(boolean mute){
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, 0);
+        sharedPreferences.edit()
+                .putBoolean("silentMode",mute).commit();
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
+        saveMuteMusic(mSilentMode);
         if(mainAudio != null) {
             mainAudio.stop();
             mainAudio.release();
@@ -81,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
     @Override
     protected void onStart() {
         super.onStart();
-        if(mainAudio == null && !sIsMuted) {
+        if(mainAudio == null && !mSilentMode) {
             mainAudio = MediaPlayer.create(this, R.raw.startbig1);
             mainAudio.setVolume(0.5f, 0.5f);
             mainAudio.setLooping(true);
@@ -96,13 +125,26 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
 
     @Override
     public void onPlayButtonClicked() {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+
+        //Replace whatever is in the fragment_container view with this fragment,
+        //and add the transaction to the back stack
+        Fragment timerFragment = new TimerFragment();
+        transaction.replace(R.id.fragment_container, timerFragment);
+        transaction.addToBackStack(null);
+        //Commit the transaction
+        transaction.commit();
+    }
+
+    @Override
+    public void onSettingsButtonClicked() {
 
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack
-        Fragment timerFragment = new TimerFragment();
-        transaction.replace(R.id.fragment_container, timerFragment);
+        Fragment settingsFragment = new SettingsFragment();
+        transaction.replace(R.id.fragment_container, settingsFragment);
         transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();

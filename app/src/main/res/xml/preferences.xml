@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/settings">
+        <SwitchPreference
+            android:key="pref_sound"
+            android:title="@string/sound_off"
+            android:defaultValue="false">
+
+
+        </SwitchPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

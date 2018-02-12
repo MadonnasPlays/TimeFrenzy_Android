@@ -1,15 +1,12 @@
 package com.avoupavou.timefrenzy;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.media.VolumeShaper;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -100,7 +97,7 @@ public class TimerFragment extends Fragment {
         bestScoreTextView = view.findViewById(R.id.text_score_value);
 
         View mainView = view.findViewById(R.id.mainView);
-        clickAudio = MediaPlayer.create(this.getContext(),R.raw.click);
+        clickAudio = MediaPlayer.create(this.getActivity(),R.raw.click);
         clickAudio.setVolume(0.5f,0.5f);
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override

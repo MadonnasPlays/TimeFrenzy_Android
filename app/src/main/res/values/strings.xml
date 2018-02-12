@@ -13,4 +13,9 @@
     <string name="zero">0</string>
     <string name="semicolon">:</string>
     <string name="three_zero">000</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sound_off">Mute Sound</string>
+    <string name="inline_preferences">Settigns</string>
 </resources>
