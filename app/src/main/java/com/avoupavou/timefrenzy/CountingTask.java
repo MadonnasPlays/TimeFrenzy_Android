@@ -1,11 +1,11 @@
 package com.avoupavou.timefrenzy;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 
 import java.util.TimerTask;
 
-import static com.avoupavou.timefrenzy.TimerFragment.mHandler;
 
 /**
  * Created by Pantazis on 09-Feb-18.
@@ -15,16 +15,19 @@ public class CountingTask extends TimerTask {
 
     public static final String MILLISECONDS = "millis";
     public static final String SECONDS = "sec";
+    private final Handler mHandler;
 
     private int sec =0;
     private float millis = 0;
     private Bundle timeBundle;
     private Message message;
-    private int updateInterval;
+    private int mStep;
 
 
-    public CountingTask(int interval){
-        this.updateInterval =interval;
+    public CountingTask(int step , Handler handler){
+        
+        this.mStep =step;
+        this.mHandler = handler;
     }
 
     public Bundle getLastMoment(){
@@ -36,17 +39,17 @@ public class CountingTask extends TimerTask {
 
     @Override
     public void run() {
-        millis += updateInterval;
+        millis += mStep;
         if(millis >= 999){
             sec ++;
             millis =0;
         }
         if(sec > 60) sec =0;
         timeBundle = new Bundle();
-        timeBundle.putInt("sec",sec);
-        timeBundle.putInt("millis",(int)millis);
+        timeBundle.putInt(SECONDS,sec);
+        timeBundle.putInt(MILLISECONDS,(int)millis);
         message = new Message();
         message.setData(timeBundle);
-        mHandler.sendMessage(message);
+        this.mHandler.sendMessage(message);
     }
 }

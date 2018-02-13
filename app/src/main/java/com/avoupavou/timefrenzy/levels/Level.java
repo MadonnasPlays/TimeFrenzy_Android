@@ -1,10 +1,12 @@
 package com.avoupavou.timefrenzy.levels;
 
+import java.io.Serializable;
+
 /**
  * Created by Pantazis on 13-Feb-18.
  */
 
-public class Level {
+public class Level{
     private int id;
     private float speed;
     private String name;
@@ -24,7 +26,8 @@ public class Level {
 
     public Level(int id) {
         this.id = id;
-        speed = id+1;
+        speed = 1;
+        locked = true;
         name = new StringBuilder().append("Level: ").append(id+1).toString();
     }
 

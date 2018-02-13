@@ -115,12 +115,12 @@ public class LevelSelectFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         int itemPosition = mRecyclerView.getChildLayoutPosition(view);
         Level level = mLevels[itemPosition];
-        mListener.onLevelSelect(level.getName());
+        mListener.onLevelSelect(level);
     }
 
 
     public interface OnLevelSelectFragmentInteractionListener {
         //TODO add level select argument
-        void onLevelSelect(String levelName);
+        void onLevelSelect(Level level);
     }
 }

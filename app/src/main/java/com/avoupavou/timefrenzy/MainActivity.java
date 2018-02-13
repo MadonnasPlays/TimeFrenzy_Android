@@ -12,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.avoupavou.timefrenzy.levels.Level;
+import com.avoupavou.timefrenzy.levels.LevelFragment;
 import com.avoupavou.timefrenzy.levels.LevelSelectFragment;
 
 public class MainActivity extends AppCompatActivity implements WelcomeFragment.OnWelcomeFragmentInteractionListener, LevelSelectFragment.OnLevelSelectFragmentInteractionListener {
@@ -142,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
 
     @Override
     public void onLevelsButtonClicked() {
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
         //Replace whatever is in the fragment_container view with this fragment,
         //and add the transaction to the back stack
         Fragment levelSelectFragment = new LevelSelectFragment();
@@ -168,8 +170,15 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
     }
 
     @Override
-    public void onLevelSelect(String levelName) {
-        //TODO start level fragment
-        Toast.makeText(this,levelName + " selected!",Toast.LENGTH_SHORT).show();
+    public void onLevelSelect(Level level) {
+
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        //Replace whatever is in the fragment_container view with this fragment,
+        //and add the transaction to the back stack
+        Fragment levelFragment = LevelFragment.newInstance(level);
+        transaction.replace(R.id.fragment_container, levelFragment);
+        transaction.addToBackStack(null);
+        //Commit the transaction    x
+        transaction.commit();
     }
 }

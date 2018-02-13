@@ -19,8 +19,6 @@ import java.util.Timer;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TimerFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link TimerFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -37,21 +35,22 @@ public class TimerFragment extends Fragment {
     private static int RUNNING_STATE = 1;
     private static int STOPPED_STATE = 2;
 
-    private static TextView timerTextView;
-    private static TextView timerMillisTextView;
-    private static TextView bestScoreTextView;
+    private  TextView timerTextView;
+    private  TextView timerMillisTextView;
+    private  TextView bestScoreTextView;
 
     private int gameState = READY_STATE;
     private Timer mainTimer;
     private CountingTask countingTask;
     private int bestScore = 1000;
 
+    public Handler mHandler;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
     private MediaPlayer clickAudio;
 
 
@@ -77,6 +76,7 @@ public class TimerFragment extends Fragment {
         return fragment;
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +84,17 @@ public class TimerFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mHandler =  new Handler() {
+
+            @Override
+            public void handleMessage(Message message) {
+                super.handleMessage(message);
+                int sec  = message.getData().getInt("sec");
+                int millis = message.getData().getInt("millis");
+                timerTextView.setText(String.format(Locale.ENGLISH,"%01d",sec));
+                timerMillisTextView.setText(String.format(Locale.ENGLISH,"%03d",millis));
+            }
+        };
     }
 
     @Override
@@ -118,42 +129,18 @@ public class TimerFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*
-        if (context instanceof OnWelcomeFragmentInteractionListener) {
-            mListener = (OnWelcomeFragmentInteractionListener) context;
-        } else {
-           throw new RuntimeException(context.toString()
-                    + " must implement OnWelcomeFragmentInteractionListener");
 
-        }
-        */
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
         if(gameState == RUNNING_STATE) mainTimer.cancel();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-
-    }
-
-
 
     private void startTimer(){
-        countingTask = new CountingTask(UPDATE_INTERVAL);
+        countingTask = new CountingTask(UPDATE_INTERVAL,mHandler);
         mainTimer = new Timer();
         mainTimer.scheduleAtFixedRate(countingTask,UPDATE_INTERVAL,UPDATE_INTERVAL);
     }
@@ -196,16 +183,5 @@ public class TimerFragment extends Fragment {
         return score;
     }
 
-    @SuppressLint("HandlerLeak")
-    public static Handler mHandler = new Handler() {
 
-        @Override
-        public void handleMessage(Message message) {
-            super.handleMessage(message);
-            int sec  = message.getData().getInt("sec");
-            int millis = message.getData().getInt("millis");
-            timerTextView.setText(String.format(Locale.ENGLISH,"%01d",sec));
-            timerMillisTextView.setText(String.format(Locale.ENGLISH,"%03d",millis));
-        }
-    };
 }
