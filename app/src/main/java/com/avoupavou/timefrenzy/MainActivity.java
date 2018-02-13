@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
     }
 
     @Override
-    public void onLevelSelect() {
+    public void onLevelSelect(String levelName) {
         //TODO start level fragment
-        Toast.makeText(this,"Level Selected",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,levelName + " selected!",Toast.LENGTH_SHORT).show();
     }
 }

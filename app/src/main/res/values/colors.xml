@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF6E40</color>
     <color name="colorBackground">#263238</color>
     <color name="textColor">#FFFFFF</color>
+    <color name="level_locked">#9E9E9E</color>
 </resources>

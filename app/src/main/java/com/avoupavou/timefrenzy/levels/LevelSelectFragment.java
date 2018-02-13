@@ -20,7 +20,7 @@ import com.avoupavou.timefrenzy.R;
  * Use the {@link LevelSelectFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LevelSelectFragment extends Fragment {
+public class LevelSelectFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,6 +34,7 @@ public class LevelSelectFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private LevelSelectAdapter mLevelSelectAdapter;
+    private Level[] mLevels;
 
     public LevelSelectFragment() {
         // Required empty public constructor
@@ -82,7 +83,9 @@ public class LevelSelectFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mLevelSelectAdapter = new LevelSelectAdapter();
+        mLevels = new Level[5];
+        for(int i =0 ; i < mLevels.length ; i ++) mLevels[i] = new Level(i);
+        mLevelSelectAdapter = new LevelSelectAdapter(mLevels,this);
         mRecyclerView.setAdapter(mLevelSelectAdapter);
         return view;
     }
@@ -104,9 +107,20 @@ public class LevelSelectFragment extends Fragment {
         mListener = null;
     }
 
+    /*
+    * onClickListener method implementation
+    * This triggers when
+    */
+    @Override
+    public void onClick(View view) {
+        int itemPosition = mRecyclerView.getChildLayoutPosition(view);
+        Level level = mLevels[itemPosition];
+        mListener.onLevelSelect(level.getName());
+    }
+
 
     public interface OnLevelSelectFragmentInteractionListener {
         //TODO add level select argument
-        void onLevelSelect();
+        void onLevelSelect(String levelName);
     }
 }
