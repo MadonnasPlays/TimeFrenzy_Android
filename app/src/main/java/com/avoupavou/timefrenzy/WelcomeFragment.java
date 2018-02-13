@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import android.widget.ImageView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link WelcomeFragment.OnFragmentInteractionListener} interface
+ * {@link OnWelcomeFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link WelcomeFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -32,7 +31,7 @@ public class WelcomeFragment extends Fragment {
     private String mParam2;
     AnimationDrawable logoAnimation;
 
-    private OnFragmentInteractionListener mListener;
+    private OnWelcomeFragmentInteractionListener mListener;
 
     public WelcomeFragment() {
         // Required empty public constructor
@@ -70,8 +69,23 @@ public class WelcomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
+
+
         Button levelsButton = (Button) view.findViewById(R.id.button_levels);
         levelsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onLevelsButtonClicked();
+                }
+            }
+
+        });
+
+
+        Button competitiveButton = (Button) view.findViewById(R.id.button_competitive);
+        competitiveButton .setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -103,11 +117,11 @@ public class WelcomeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnWelcomeFragmentInteractionListener) {
+            mListener = (OnWelcomeFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnWelcomeFragmentInteractionListener");
         }
     }
 
@@ -127,8 +141,9 @@ public class WelcomeFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnWelcomeFragmentInteractionListener {
         void onPlayButtonClicked();
+        void onLevelsButtonClicked();
         void onSettingsButtonClicked();
     }
 

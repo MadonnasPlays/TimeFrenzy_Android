@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class MainActivity extends AppCompatActivity implements WelcomeFragment.OnFragmentInteractionListener {
+import com.avoupavou.timefrenzy.levels.LevelSelectFragment;
+
+public class MainActivity extends AppCompatActivity implements WelcomeFragment.OnWelcomeFragmentInteractionListener, LevelSelectFragment.OnLevelSelectFragmentInteractionListener {
+
 
     private static final String LOG_TAG = "MAIN_ACTIVITY";
     private static final String PREFS_NAME = "basicPrefs";
@@ -137,16 +141,35 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
     }
 
     @Override
-    public void onSettingsButtonClicked() {
-
+    public void onLevelsButtonClicked() {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack
-        Fragment settingsFragment = new SettingsFragment();
-        transaction.replace(R.id.fragment_container, settingsFragment);
+        //Replace whatever is in the fragment_container view with this fragment,
+        //and add the transaction to the back stack
+        Fragment levelSelectFragment = new LevelSelectFragment();
+        transaction.replace(R.id.fragment_container, levelSelectFragment);
         transaction.addToBackStack(null);
-        // Commit the transaction
+        //Commit the transaction
         transaction.commit();
+    }
+
+    @Override
+    public void onSettingsButtonClicked() {
+
+//        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//
+//        // Replace whatever is in the fragment_container view with this fragment,
+//        // and add the transaction to the back stack
+//        Fragment settingsFragment = new SettingsFragment();
+//        transaction.replace(R.id.fragment_container, settingsFragment);
+//        transaction.addToBackStack(null);
+//        // Commit the transaction
+//        transaction.commit();
+    }
+
+    @Override
+    public void onLevelSelect() {
+        //TODO start level fragment
+        Toast.makeText(this,"Level Selected",Toast.LENGTH_SHORT).show();
     }
 }
