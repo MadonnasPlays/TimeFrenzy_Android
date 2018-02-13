@@ -83,8 +83,8 @@ public class LevelSelectFragment extends Fragment implements View.OnClickListene
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mLevels = new Level[5];
-        for(int i =0 ; i < mLevels.length ; i ++) mLevels[i] = new Level(i);
+        LevelController.initLevels();
+        mLevels = LevelController.getLevels();
         mLevelSelectAdapter = new LevelSelectAdapter(mLevels,this);
         mRecyclerView.setAdapter(mLevelSelectAdapter);
         return view;

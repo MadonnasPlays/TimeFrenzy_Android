@@ -11,9 +11,18 @@ public class Level{
     private float speed;
     private String name;
     private boolean locked;
+    private int scoreToPass;
 
     public Level() {
 
+    }
+
+    public int getScoreToPass() {
+        return scoreToPass;
+    }
+
+    public void setScoreToPass(int scoreToPass) {
+        this.scoreToPass = scoreToPass;
     }
 
     public boolean isLocked() {

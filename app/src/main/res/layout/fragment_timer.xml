@@ -69,7 +69,7 @@
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/text_timer_seconds"
-        app:layout_constraintEnd_toStartOf="@id/text_level_timer_millis"
+        app:layout_constraintEnd_toStartOf="@id/text_timer_millis"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/text_timer_seconds"

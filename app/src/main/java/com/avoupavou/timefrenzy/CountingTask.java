@@ -21,11 +21,11 @@ public class CountingTask extends TimerTask {
     private float millis = 0;
     private Bundle timeBundle;
     private Message message;
-    private int mStep;
+    private float mStep;
 
 
-    public CountingTask(int step , Handler handler){
-        
+    public CountingTask(float step , Handler handler){
+
         this.mStep =step;
         this.mHandler = handler;
     }

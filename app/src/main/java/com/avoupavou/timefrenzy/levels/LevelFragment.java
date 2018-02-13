@@ -8,16 +8,19 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avoupavou.timefrenzy.CountingTask;
 import com.avoupavou.timefrenzy.R;
 import com.google.gson.Gson;
 
+import java.io.Console;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Timer;
@@ -128,6 +131,26 @@ public class LevelFragment extends Fragment {
         return view;
     }
 
+    private boolean isLevelPassed(int score){
+        boolean passed =  score < mLevel.getScoreToPass();
+
+        return passed;
+    }
+
+    private int calculateScore(Bundle time){
+        int score = 0;
+
+        int ms = time.getInt(CountingTask.MILLISECONDS);
+        int sec = time.getInt(CountingTask.SECONDS);
+        if(ms < 500 && sec >= 1){
+            score = ms;
+        }else{
+            score = 1000-ms;
+        }
+        //Log.d("LevelFragment","Score: "+score);
+        return score;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -156,6 +179,8 @@ public class LevelFragment extends Fragment {
             mainTimer.cancel();
             Bundle b = mCountingTask.getLastMoment();
             mGameState = STOPPED_STATE;
+            int score = calculateScore(b);
+            if(isLevelPassed(score)) levelPassed();
         }else if(mGameState == STOPPED_STATE){
             mTimerTextView.setText(String.format(Locale.ENGLISH,"%01d",0));
             mTimerMillisTextView.setText(String.format(Locale.ENGLISH,"%03d",0));
@@ -163,8 +188,13 @@ public class LevelFragment extends Fragment {
         }
     }
 
+    private void levelPassed() {
+        LevelController.unLockNext(mLevel.getId());
+        Toast.makeText(this.getActivity(),mLevel.getName()+ "Passed!!!!",Toast.LENGTH_SHORT).show();
+    }
+
     private void startTimer(){
-        mCountingTask = new CountingTask((int)mLevel.getSpeed(),mLevelCounterHandler);
+        mCountingTask = new CountingTask(mLevel.getSpeed(),mLevelCounterHandler);
         mainTimer = new Timer();
         mainTimer.scheduleAtFixedRate(mCountingTask,UPDATE_INTERVAL,UPDATE_INTERVAL);
     }

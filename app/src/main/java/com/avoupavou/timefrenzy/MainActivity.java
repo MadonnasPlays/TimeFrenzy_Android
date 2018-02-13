@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
         Fragment levelFragment = LevelFragment.newInstance(level);
         transaction.replace(R.id.fragment_container, levelFragment);
         transaction.addToBackStack(null);
-        //Commit the transaction    x
+        //Commit the transaction
         transaction.commit();
     }
 }

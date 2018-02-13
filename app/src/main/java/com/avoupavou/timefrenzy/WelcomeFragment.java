@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.avoupavou.timefrenzy.levels.LevelController;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -25,6 +31,8 @@ public class WelcomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private int mLogoClicks;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,6 +70,7 @@ public class WelcomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mLogoClicks =0;
     }
 
     @Override
@@ -109,9 +118,31 @@ public class WelcomeFragment extends Fragment {
         });
 
         ImageView logoImage = (ImageView) view.findViewById(R.id.image_logo);
-        logoAnimation = (AnimationDrawable) logoImage.getDrawable();
-        logoAnimation.start();
+        //logoAnimation = (AnimationDrawable) logoImage.getDrawable();
+        //logoAnimation.start();
+
+        logoImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLogoClicks++;
+                if(mLogoClicks > 10) {
+                    cheatActivated();
+                }
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        mLogoClicks =0;
+                    }
+                }, 3000);
+            }
+        });
         return view;
+    }
+
+    private void cheatActivated(){
+        LevelController.initLevels();
+        LevelController.unlockAll();
+        Toast.makeText(this.getActivity(),"Cheat activated",Toast.LENGTH_LONG).show();
     }
 
     @Override
