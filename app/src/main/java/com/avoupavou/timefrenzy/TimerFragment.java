@@ -7,11 +7,13 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -38,6 +40,8 @@ public class TimerFragment extends Fragment {
     private  TextView timerTextView;
     private  TextView timerMillisTextView;
     private  TextView bestScoreTextView;
+
+    private CircleProgressBar mProgressBar;
 
     private int gameState = READY_STATE;
     private Timer mainTimer;
@@ -91,6 +95,7 @@ public class TimerFragment extends Fragment {
                 super.handleMessage(message);
                 int sec  = message.getData().getInt("sec");
                 int millis = message.getData().getInt("millis");
+                mProgressBar.setProgress(millis);
                 timerTextView.setText(String.format(Locale.ENGLISH,"%01d",sec));
                 timerMillisTextView.setText(String.format(Locale.ENGLISH,"%03d",millis));
             }
@@ -106,6 +111,9 @@ public class TimerFragment extends Fragment {
         timerTextView = view.findViewById(R.id.text_timer_seconds);
         timerMillisTextView = view.findViewById(R.id.text_timer_millis);
         bestScoreTextView = view.findViewById(R.id.text_score_value);
+
+        mProgressBar = view.findViewById(R.id.custom_progressBar);
+
 
         View mainView = view.findViewById(R.id.mainView);
         clickAudio = MediaPlayer.create(this.getActivity(),R.raw.click);
@@ -152,8 +160,8 @@ public class TimerFragment extends Fragment {
             startTimer();
             gameState = RUNNING_STATE;
         }else if (gameState == RUNNING_STATE){
-            clickAudio.start();
             mainTimer.cancel();
+            clickAudio.start();
             Bundle b = countingTask.getLastMoment();
             int score = calculateScore(b);
             if(score < bestScore) updateMaxScore(score);

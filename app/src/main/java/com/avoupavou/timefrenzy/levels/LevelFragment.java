@@ -13,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avoupavou.timefrenzy.CircleProgressBar;
 import com.avoupavou.timefrenzy.CountingTask;
 import com.avoupavou.timefrenzy.R;
 import com.google.gson.Gson;
@@ -48,6 +50,8 @@ public class LevelFragment extends Fragment {
     private TextView mTimerTextView;
     private TextView mTimerMillisTextView;
     private MediaPlayer mClickAudio;
+    private CircleProgressBar mProgressBar;
+
     private int mGameState;
     private CountingTask mCountingTask;
     private Timer mainTimer;
@@ -93,8 +97,11 @@ public class LevelFragment extends Fragment {
             @Override
             public void handleMessage(Message message) {
                 super.handleMessage(message);
+                if(mGameState == STOPPED_STATE) return;
                 int sec  = message.getData().getInt("sec");
                 int millis = message.getData().getInt("millis");
+                //Log.d("LevelFragment",String.valueOf(millis));
+                mProgressBar.setProgress(millis);
                 mTimerTextView.setText(String.format(Locale.ENGLISH,"%01d",sec));
                 mTimerMillisTextView.setText(String.format(Locale.ENGLISH,"%03d",millis));
             }
@@ -110,6 +117,8 @@ public class LevelFragment extends Fragment {
         mTimerMillisTextView = view.findViewById(R.id.text_level_timer_millis);
         mLevelTitle = view.findViewById(R.id.text_level_tittle);
 
+        mProgressBar = view.findViewById(R.id.progressBar_level);
+
         mLevelTitle.setText(mLevel.getName());
 
 
@@ -120,6 +129,8 @@ public class LevelFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    //
+                    // Log.d("LevelFragment","Pressed");
                     screenTouched();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     // Released
@@ -137,17 +148,14 @@ public class LevelFragment extends Fragment {
         return passed;
     }
 
-    private int calculateScore(Bundle time){
+    private int calculateScore(int ms){
         int score = 0;
-
-        int ms = time.getInt(CountingTask.MILLISECONDS);
-        int sec = time.getInt(CountingTask.SECONDS);
-        if(ms < 500 && sec >= 1){
+        if(ms < 500){
             score = ms;
         }else{
             score = 1000-ms;
         }
-        //Log.d("LevelFragment","Score: "+score);
+
         return score;
     }
 
@@ -165,6 +173,8 @@ public class LevelFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        mainTimer.cancel();
+        mainTimer = null;
         mListener = null;
     }
 
@@ -175,11 +185,11 @@ public class LevelFragment extends Fragment {
             startTimer();
             mGameState = RUNNING_STATE;
         }else if (mGameState == RUNNING_STATE){
-            mClickAudio.start();
-            mainTimer.cancel();
-            Bundle b = mCountingTask.getLastMoment();
             mGameState = STOPPED_STATE;
-            int score = calculateScore(b);
+            mClickAudio.start();
+            int ms = Integer.parseInt((String) mTimerMillisTextView.getText());
+            mainTimer.cancel();
+            int score = calculateScore(ms);
             if(isLevelPassed(score)) levelPassed();
         }else if(mGameState == STOPPED_STATE){
             mTimerTextView.setText(String.format(Locale.ENGLISH,"%01d",0));

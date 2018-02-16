@@ -40,11 +40,11 @@ public class CountingTask extends TimerTask {
     @Override
     public void run() {
         millis += mStep;
-        if(millis >= 999){
+        if(millis > 999){
             sec ++;
             millis =0;
         }
-        if(sec > 60) sec =0;
+        if(sec > 59) sec =0;
         timeBundle = new Bundle();
         timeBundle.putInt(SECONDS,sec);
         timeBundle.putInt(MILLISECONDS,(int)millis);

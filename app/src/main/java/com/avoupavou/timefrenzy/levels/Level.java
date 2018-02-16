@@ -37,7 +37,7 @@ public class Level{
         this.id = id;
         speed = 1;
         locked = true;
-        name = new StringBuilder().append("Level: ").append(id+1).toString();
+        name = new StringBuilder().append("x").append(speed).toString();
     }
 
     public String getSpeedString(){

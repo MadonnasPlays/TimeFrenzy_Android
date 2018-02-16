@@ -19,6 +19,7 @@
         android:textAlignment="center"
         android:textColor="@color/textColor"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -77,5 +78,22 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/text_level_semicolon"
         app:layout_constraintTop_toTopOf="@+id/text_level_timer_seconds" />
+    <com.avoupavou.timefrenzy.CircleProgressBar
+        android:id="@+id/progressBar_level"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        app:progressbarColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:progress="0"
+        app:max="998"
+        app:min="0"
+        app:progressBarThickness="15dp" />
 
 </android.support.constraint.ConstraintLayout>
