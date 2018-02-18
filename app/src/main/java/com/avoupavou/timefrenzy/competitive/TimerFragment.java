@@ -1,4 +1,4 @@
-package com.avoupavou.timefrenzy;
+package com.avoupavou.timefrenzy.competitive;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
@@ -7,13 +7,15 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.avoupavou.timefrenzy.CircleProgressBar;
+import com.avoupavou.timefrenzy.CountingTask;
+import com.avoupavou.timefrenzy.R;
 
 import java.util.Locale;
 import java.util.Timer;

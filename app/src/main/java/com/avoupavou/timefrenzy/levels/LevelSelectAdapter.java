@@ -2,6 +2,7 @@ package com.avoupavou.timefrenzy.levels;
 
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.avoupavou.timefrenzy.R;
 
 public class LevelSelectAdapter extends RecyclerView.Adapter<LevelSelectAdapter.ViewHolder> {
 
+    private static final String LOG_TAG = "LevelSelectAdapter";
     private View.OnClickListener mOnClickListener;
     private Level[] mLevels;
 
@@ -48,12 +50,17 @@ public class LevelSelectAdapter extends RecyclerView.Adapter<LevelSelectAdapter.
 
     @Override
     public void onBindViewHolder(LevelSelectAdapter.ViewHolder holder, int position) {
+
         Level level = mLevels[position];
+        Log.d(LOG_TAG,"position: "+position + " level_id:"+level.getId() + "level_passed: "+level.isLocked() );
         holder.mTextTitle.setText(level.getName());
-        holder.mTextSpeed.setText(level.getSpeedString());
+        holder.mTextSpeed.setText(String.valueOf(level.getBestScore()));
         if(level.isLocked()) holder.mConstraintLayout.setAlpha(0.5f);
+        else holder.mConstraintLayout.setAlpha(1.0f);
         holder.mConstraintLayout.setClickable(!level.isLocked());
     }
+
+
 
     @Override
     public int getItemCount() {

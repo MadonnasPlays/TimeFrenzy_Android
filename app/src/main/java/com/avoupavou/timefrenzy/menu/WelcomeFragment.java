@@ -1,4 +1,4 @@
-package com.avoupavou.timefrenzy;
+package com.avoupavou.timefrenzy.menu;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.avoupavou.timefrenzy.R;
 import com.avoupavou.timefrenzy.levels.LevelController;
 
 import java.util.Timer;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,12 @@ public class LevelSelectFragment extends Fragment implements View.OnClickListene
         mLevelSelectAdapter = new LevelSelectAdapter(mLevels,this);
         mRecyclerView.setAdapter(mLevelSelectAdapter);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mLevelSelectAdapter.notifyDataSetChanged();
     }
 
     @Override

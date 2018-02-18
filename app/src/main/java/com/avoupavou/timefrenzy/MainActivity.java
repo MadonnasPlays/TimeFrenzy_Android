@@ -9,12 +9,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.avoupavou.timefrenzy.competitive.TimerFragment;
 import com.avoupavou.timefrenzy.levels.Level;
 import com.avoupavou.timefrenzy.levels.LevelFragment;
 import com.avoupavou.timefrenzy.levels.LevelSelectFragment;
+import com.avoupavou.timefrenzy.menu.WelcomeFragment;
 
 public class MainActivity extends AppCompatActivity implements WelcomeFragment.OnWelcomeFragmentInteractionListener, LevelSelectFragment.OnLevelSelectFragmentInteractionListener {
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        AppDatabase.getAppDatabase(this);
         // Create new fragment and transaction
         Fragment welcomeFragment = new WelcomeFragment();
         mFragmentManager = getFragmentManager();

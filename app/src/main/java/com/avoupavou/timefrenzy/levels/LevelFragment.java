@@ -58,6 +58,7 @@ public class LevelFragment extends Fragment {
     private Level mLevel;
     private Handler mLevelCounterHandler;
     private TextView mLevelTitle;
+    private final String LOG_TAG = "LevelFragment";
 
     public LevelFragment() {
         // Required empty public constructor
@@ -74,9 +75,7 @@ public class LevelFragment extends Fragment {
     public static LevelFragment newInstance(Level level) {
         LevelFragment fragment = new LevelFragment();
         Bundle args = new Bundle();
-        Gson gson = new Gson();
-        String levelJSON = gson.toJson(level);
-        args.putString(ARG_PARAM1,levelJSON);
+        args.putInt(ARG_PARAM1,level.getId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,9 +86,9 @@ public class LevelFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String levelJSON = getArguments().getString(ARG_PARAM1);
-            Gson gson = new Gson();
-            mLevel = gson.fromJson(levelJSON,Level.class);
+            int levelId = getArguments().getInt(ARG_PARAM1);
+            Log.d(LOG_TAG,"ID: "+levelId);
+            mLevel = LevelController.getLevel(levelId);
         }
 
         mLevelCounterHandler = new Handler() {
@@ -148,9 +147,9 @@ public class LevelFragment extends Fragment {
         return passed;
     }
 
-    private int calculateScore(int ms){
+    private int calculateScore(int sec, int ms){
         int score = 0;
-        if(ms < 500){
+        if(sec > 0 && ms < 500){
             score = ms;
         }else{
             score = 1000-ms;
@@ -173,7 +172,7 @@ public class LevelFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mainTimer.cancel();
+        if(mainTimer != null) mainTimer.cancel();
         mainTimer = null;
         mListener = null;
     }
@@ -188,8 +187,10 @@ public class LevelFragment extends Fragment {
             mGameState = STOPPED_STATE;
             mClickAudio.start();
             int ms = Integer.parseInt((String) mTimerMillisTextView.getText());
+            int sec = Integer.parseInt((String) mTimerTextView.getText());
             mainTimer.cancel();
-            int score = calculateScore(ms);
+            int score = calculateScore(sec,ms);
+            LevelController.updateBestScore(mLevel.getId(),score);
             if(isLevelPassed(score)) levelPassed();
         }else if(mGameState == STOPPED_STATE){
             mTimerTextView.setText(String.format(Locale.ENGLISH,"%01d",0));

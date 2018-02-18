@@ -1,17 +1,24 @@
 package com.avoupavou.timefrenzy.levels;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.util.Log;
+
 import java.io.Serializable;
 
 /**
  * Created by Pantazis on 13-Feb-18.
  */
-
+@Entity(tableName = "levels")
 public class Level{
+
+    @PrimaryKey
     private int id;
+
     private float speed;
-    private String name;
     private boolean locked;
     private int scoreToPass;
+    private int bestScore;
 
     public Level() {
 
@@ -37,7 +44,7 @@ public class Level{
         this.id = id;
         speed = 1;
         locked = true;
-        name = new StringBuilder().append("x").append(speed).toString();
+        bestScore = 1000;
     }
 
     public String getSpeedString(){
@@ -53,11 +60,20 @@ public class Level{
     }
 
     public String getName() {
-        return name;
+        return new StringBuilder().append("x").append(speed).toString();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getBestScore() {
+        return bestScore;
+    }
+
+    public void setBestScore(int bestScore) {
+        this.bestScore = bestScore;
+    }
+
+
+    public void updateBestScore(int bestScore) {
+        if(this.bestScore  > bestScore) this.bestScore = bestScore;
     }
 
     public int getId() {
