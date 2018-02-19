@@ -3,7 +3,6 @@ package com.avoupavou.timefrenzy.levels;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
@@ -13,17 +12,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avoupavou.timefrenzy.CircleProgressBar;
 import com.avoupavou.timefrenzy.CountingTask;
 import com.avoupavou.timefrenzy.R;
-import com.google.gson.Gson;
 
-import java.io.Console;
-import java.io.Serializable;
 import java.util.Locale;
 import java.util.Timer;
 
@@ -46,7 +42,7 @@ public class LevelFragment extends Fragment {
     private static int STOPPED_STATE = 2;
 
 
-    private OnFragmentInteractionListener mListener;
+    private OnLevelFragmentInteractionListener mListener;
     private TextView mTimerTextView;
     private TextView mTimerMillisTextView;
     private MediaPlayer mClickAudio;
@@ -59,6 +55,7 @@ public class LevelFragment extends Fragment {
     private Handler mLevelCounterHandler;
     private TextView mLevelTitle;
     private final String LOG_TAG = "LevelFragment";
+    private ImageButton mBackButton;
 
     public LevelFragment() {
         // Required empty public constructor
@@ -107,6 +104,7 @@ public class LevelFragment extends Fragment {
         };
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -115,11 +113,21 @@ public class LevelFragment extends Fragment {
         mTimerTextView = view.findViewById(R.id.text_level_timer_seconds);
         mTimerMillisTextView = view.findViewById(R.id.text_level_timer_millis);
         mLevelTitle = view.findViewById(R.id.text_level_tittle);
+        mBackButton = view.findViewById(R.id.button_level_back);
 
+        mBackButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mListener.backButtonPressed();
+                }
+                return true;
+            }
+        });
         mProgressBar = view.findViewById(R.id.progressBar_level);
 
         mLevelTitle.setText(mLevel.getName());
-
+        
 
         View mainView = view.findViewById(R.id.constraint_level);
         mClickAudio = MediaPlayer.create(this.getActivity(),R.raw.click);
@@ -161,12 +169,12 @@ public class LevelFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        if (context instanceof OnLevelFragmentInteractionListener) {
+            mListener = (OnLevelFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -213,7 +221,6 @@ public class LevelFragment extends Fragment {
 
 
 
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -224,6 +231,7 @@ public class LevelFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnLevelFragmentInteractionListener {
+        public void backButtonPressed();
     }
 }

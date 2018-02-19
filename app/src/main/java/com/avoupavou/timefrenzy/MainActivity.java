@@ -17,7 +17,8 @@ import com.avoupavou.timefrenzy.levels.LevelFragment;
 import com.avoupavou.timefrenzy.levels.LevelSelectFragment;
 import com.avoupavou.timefrenzy.menu.WelcomeFragment;
 
-public class MainActivity extends AppCompatActivity implements WelcomeFragment.OnWelcomeFragmentInteractionListener, LevelSelectFragment.OnLevelSelectFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements WelcomeFragment.OnWelcomeFragmentInteractionListener,
+        LevelSelectFragment.OnLevelSelectFragmentInteractionListener, LevelFragment.OnLevelFragmentInteractionListener{
 
 
     private static final String LOG_TAG = "MAIN_ACTIVITY";
@@ -182,5 +183,10 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
         transaction.addToBackStack(null);
         //Commit the transaction
         transaction.commit();
+    }
+
+    @Override
+    public void backButtonPressed() {
+        onBackPressed();
     }
 }

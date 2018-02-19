@@ -5,9 +5,26 @@
     android:id="@+id/constraint_level"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/colorBackground"
-    >
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <ImageButton
+        android:id="@+id/button_level_back"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:src="@drawable/ic_action_back"
+        app:layout_constraintBottom_toBottomOf="@+id/text_level_tittle"
+        app:layout_constraintEnd_toStartOf="@+id/text_level_tittle"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_level_tittle"
+        app:srcCompat="@drawable/ic_action_back" />
 
     <TextView
         android:id="@+id/text_level_tittle"
@@ -18,7 +35,7 @@
         android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textColor="@color/textColor"
-        android:textSize="30sp"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +95,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/text_level_semicolon"
         app:layout_constraintTop_toTopOf="@+id/text_level_timer_seconds" />
+
     <com.avoupavou.timefrenzy.CircleProgressBar
         android:id="@+id/progressBar_level"
         android:layout_width="0dp"
@@ -86,14 +104,14 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        app:progressbarColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:progress="0"
         app:max="998"
         app:min="0"
-        app:progressBarThickness="15dp" />
+        app:progress="0"
+        app:progressBarThickness="15dp"
+        app:progressbarColor="@color/colorAccent" />
 
 </android.support.constraint.ConstraintLayout>
