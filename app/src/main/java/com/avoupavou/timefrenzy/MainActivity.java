@@ -13,6 +13,7 @@ import android.widget.ToggleButton;
 
 import com.avoupavou.timefrenzy.competitive.TimerFragment;
 import com.avoupavou.timefrenzy.levels.Level;
+import com.avoupavou.timefrenzy.levels.LevelController;
 import com.avoupavou.timefrenzy.levels.LevelFragment;
 import com.avoupavou.timefrenzy.levels.LevelSelectFragment;
 import com.avoupavou.timefrenzy.menu.WelcomeFragment;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
         // Commit the transaction
         transaction.commit();
 
+        LevelController.initLevels();
 
         //Share preferences init
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, 0);

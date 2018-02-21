@@ -26,7 +26,7 @@ import java.util.Timer;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LevelFragment.OnFragmentInteractionListener} interface
+ * {@link LevelFragment.OnLevelFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link LevelFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -84,7 +84,6 @@ public class LevelFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             int levelId = getArguments().getInt(ARG_PARAM1);
-            Log.d(LOG_TAG,"ID: "+levelId);
             mLevel = LevelController.getLevel(levelId);
         }
 
@@ -217,8 +216,6 @@ public class LevelFragment extends Fragment {
         mainTimer = new Timer();
         mainTimer.scheduleAtFixedRate(mCountingTask,UPDATE_INTERVAL,UPDATE_INTERVAL);
     }
-
-
 
 
     /**

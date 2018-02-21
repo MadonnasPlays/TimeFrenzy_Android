@@ -56,7 +56,7 @@ public class LevelController {
 
     public static void initLevels() {
 
-        if(levels != null) return ;
+            if(levels != null) return ;
 
         //load levels from database
         db = AppDatabase.getAppDatabase(null);
@@ -70,7 +70,8 @@ public class LevelController {
             try {
                 JSONObject lvlsJSON = new JSONObject(levelsJSON);
                 JSONArray array = lvlsJSON.getJSONArray("levels");
-                levels = new Level[array.length()];
+                levelsCount = array.length();
+                levels = new Level[levelsCount];
                 for(int i =0 ; i < array.length(); i++){
                     JSONObject lJSON = array.getJSONObject(i);
                     levels[i] = new Level(lJSON.getInt("id")-1);
@@ -127,7 +128,6 @@ public class LevelController {
     }
 
     public static void saveLevelToDb(Level level){
-        Log.d(LOG_TAG,"level updated");
         AppDatabase.updateLevel(db,level);
     }
 

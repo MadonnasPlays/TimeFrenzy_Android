@@ -52,7 +52,6 @@ public class LevelSelectAdapter extends RecyclerView.Adapter<LevelSelectAdapter.
     public void onBindViewHolder(LevelSelectAdapter.ViewHolder holder, int position) {
 
         Level level = mLevels[position];
-        Log.d(LOG_TAG,"position: "+position + " level_id:"+level.getId() + "level_passed: "+level.isLocked() );
         holder.mTextTitle.setText(level.getName());
         holder.mTextSpeed.setText(String.valueOf(level.getBestScore()));
         if(level.isLocked()) holder.mConstraintLayout.setAlpha(0.5f);
