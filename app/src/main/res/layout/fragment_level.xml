@@ -24,7 +24,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_level_tittle"
-        app:srcCompat="@drawable/ic_action_back" />
+        app:srcCompat="@drawable/ic_action_back"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="16dp"
+        />
 
     <TextView
         android:id="@+id/text_level_tittle"

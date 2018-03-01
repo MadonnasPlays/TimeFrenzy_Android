@@ -82,6 +82,8 @@ public class CircleProgressBar extends View {
         rectF.set(0 + strokeWidth / 2, 0 + strokeWidth / 2, min - strokeWidth / 2, min - strokeWidth / 2);
     }
 
+
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -90,6 +92,11 @@ public class CircleProgressBar extends View {
         float angle = 360 * progress / max;
         canvas.drawArc(rectF, startAngle, angle, false, foregroundPaint);
 
+    }
+
+    public void setMax(int max){
+        this.max = max;
+        invalidate();
     }
 
     public void setProgress(float progress) {

@@ -1,5 +1,6 @@
 package com.avoupavou.timefrenzy;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -14,6 +15,7 @@ import android.widget.ToggleButton;
 import com.avoupavou.timefrenzy.competitive.TimerFragment;
 import com.avoupavou.timefrenzy.levels.Level;
 import com.avoupavou.timefrenzy.levels.LevelController;
+import com.avoupavou.timefrenzy.levels.LevelDialog;
 import com.avoupavou.timefrenzy.levels.LevelFragment;
 import com.avoupavou.timefrenzy.levels.LevelSelectFragment;
 import com.avoupavou.timefrenzy.menu.WelcomeFragment;

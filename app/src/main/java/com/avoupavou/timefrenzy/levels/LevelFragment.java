@@ -1,6 +1,7 @@
 package com.avoupavou.timefrenzy.levels;
 
 import android.annotation.SuppressLint;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -95,7 +96,6 @@ public class LevelFragment extends Fragment {
                 if(mGameState == STOPPED_STATE) return;
                 int sec  = message.getData().getInt("sec");
                 int millis = message.getData().getInt("millis");
-                //Log.d("LevelFragment",String.valueOf(millis));
                 mProgressBar.setProgress(millis);
                 mTimerTextView.setText(String.format(Locale.ENGLISH,"%01d",sec));
                 mTimerMillisTextView.setText(String.format(Locale.ENGLISH,"%03d",millis));
@@ -125,6 +125,7 @@ public class LevelFragment extends Fragment {
         });
         mProgressBar = view.findViewById(R.id.progressBar_level);
 
+
         mLevelTitle.setText(mLevel.getName());
         
 
@@ -135,8 +136,6 @@ public class LevelFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    //
-                    // Log.d("LevelFragment","Pressed");
                     screenTouched();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     // Released
@@ -196,9 +195,11 @@ public class LevelFragment extends Fragment {
             int ms = Integer.parseInt((String) mTimerMillisTextView.getText());
             int sec = Integer.parseInt((String) mTimerTextView.getText());
             mainTimer.cancel();
+
             int score = calculateScore(sec,ms);
             LevelController.updateBestScore(mLevel.getId(),score);
-            if(isLevelPassed(score)) levelPassed();
+            if(isLevelPassed(score)) levelPassed(score);
+
         }else if(mGameState == STOPPED_STATE){
             mTimerTextView.setText(String.format(Locale.ENGLISH,"%01d",0));
             mTimerMillisTextView.setText(String.format(Locale.ENGLISH,"%03d",0));
@@ -206,9 +207,13 @@ public class LevelFragment extends Fragment {
         }
     }
 
-    private void levelPassed() {
+    private void levelPassed(int score) {
         LevelController.unLockNext(mLevel.getId());
-        Toast.makeText(this.getActivity(),mLevel.getName()+ "Passed!!!!",Toast.LENGTH_SHORT).show();
+
+        LevelDialog levelDialog= new LevelDialog();
+        levelDialog.setLevel(mLevel.getName());
+        levelDialog.setScore(score);
+        levelDialog.show(this.getActivity().getFragmentManager(), "popup");
     }
 
     private void startTimer(){
