@@ -21,7 +21,7 @@ import com.avoupavou.timefrenzy.levels.LevelSelectFragment;
 import com.avoupavou.timefrenzy.menu.WelcomeFragment;
 
 public class MainActivity extends AppCompatActivity implements WelcomeFragment.OnWelcomeFragmentInteractionListener,
-        LevelSelectFragment.OnLevelSelectFragmentInteractionListener, LevelFragment.OnLevelFragmentInteractionListener{
+        LevelSelectFragment.OnLevelSelectFragmentInteractionListener, LevelFragment.OnLevelFragmentInteractionListener , LevelDialog.OnLevelDialogInteractionListener{
 
 
     private static final String LOG_TAG = "MAIN_ACTIVITY";
@@ -133,7 +133,8 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        onLevelsButtonClicked();
+        //super.onBackPressed();
     }
 
     @Override
@@ -193,4 +194,21 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
     public void backButtonPressed() {
         onBackPressed();
     }
+
+    @Override
+    public void backButtonDialogPressed() {
+        onLevelsButtonClicked();
+        //onBackPressed();
+    }
+
+    @Override
+    public void playAgainButtonDialogPressed(Level level) {
+        onLevelSelect(level);
+    }
+
+    @Override
+    public void nextButtonDialogPressed(int nextLevelId) {
+        onLevelSelect(LevelController.getLevel(nextLevelId));
+    }
+
 }

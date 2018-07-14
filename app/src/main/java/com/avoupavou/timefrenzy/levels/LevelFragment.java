@@ -58,6 +58,8 @@ public class LevelFragment extends Fragment {
     private final String LOG_TAG = "LevelFragment";
     private ImageButton mBackButton;
 
+    private LevelDialog levelDialog;
+
     public LevelFragment() {
         // Required empty public constructor
     }
@@ -210,8 +212,8 @@ public class LevelFragment extends Fragment {
     private void levelPassed(int score) {
         LevelController.unLockNext(mLevel.getId());
 
-        LevelDialog levelDialog= new LevelDialog();
-        levelDialog.setLevel(mLevel.getName());
+        levelDialog= new LevelDialog();
+        levelDialog.setLevel(mLevel);
         levelDialog.setScore(score);
         levelDialog.show(this.getActivity().getFragmentManager(), "popup");
     }

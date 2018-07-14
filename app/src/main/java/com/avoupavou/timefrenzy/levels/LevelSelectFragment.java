@@ -126,7 +126,6 @@ public class LevelSelectFragment extends Fragment implements View.OnClickListene
 
 
     public interface OnLevelSelectFragmentInteractionListener {
-        //TODO add level select argument
         void onLevelSelect(Level level);
     }
 }

@@ -19,4 +19,6 @@
     <string name="sound_off">Mute Sound</string>
     <string name="inline_preferences">Settigns</string>
     <string name="next_level">Next</string>
+    <string name="back">Back</string>
+    <string name="play_again">Play Again</string>
 </resources>
