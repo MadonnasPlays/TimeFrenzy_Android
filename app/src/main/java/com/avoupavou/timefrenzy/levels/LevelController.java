@@ -113,7 +113,7 @@ public class LevelController {
     public static void updateBestScore(int id,int bestScore){
         if (id < 0 || id > levelsCount) return;
         Level level  = levels[id];
-        level.setBestScore(bestScore);
+        level.updateBestScore(bestScore);
         saveLevelToDb(level);
     }
 
