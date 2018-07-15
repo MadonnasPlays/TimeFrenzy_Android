@@ -8,8 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.avoupavou.timefrenzy.R;
 
@@ -87,6 +90,17 @@ public class LevelSelectFragment extends Fragment implements View.OnClickListene
         mLevels = LevelController.getLevels();
         mLevelSelectAdapter = new LevelSelectAdapter(mLevels,this);
         mRecyclerView.setAdapter(mLevelSelectAdapter);
+
+        ImageButton mBackButton = (ImageButton)view.findViewById(R.id.button_level_back1);
+        mBackButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mListener.onLevelSelectBack();
+                }
+                return true;
+            }
+        });
         return view;
     }
 
@@ -127,5 +141,6 @@ public class LevelSelectFragment extends Fragment implements View.OnClickListene
 
     public interface OnLevelSelectFragmentInteractionListener {
         void onLevelSelect(Level level);
+        void onLevelSelectBack();
     }
 }

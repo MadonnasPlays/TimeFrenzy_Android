@@ -42,16 +42,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
 
         AppDatabase.getAppDatabase(this);
         // Create new fragment and transaction
-        Fragment welcomeFragment = new WelcomeFragment();
-        mFragmentManager = getFragmentManager();
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack
-        //transaction.replace(R.id.fragment_container, welcomeFragment);
-        transaction.add(R.id.fragment_container,welcomeFragment);
-        // Commit the transaction
-        transaction.commit();
+        welcomeScreen();
 
         LevelController.initLevels();
 
@@ -83,7 +74,15 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
 
     }
 
-
+    private void welcomeScreen(){
+        // Create new fragment and transaction
+        Fragment welcomeFragment = new WelcomeFragment();
+        mFragmentManager = getFragmentManager();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container,welcomeFragment);
+        // Commit the transaction
+        transaction.commit();
+    }
     private void setMuteMusic(boolean mute){
         if(mute){
             if(mainAudio!= null && mainAudio.isPlaying()){
@@ -188,6 +187,11 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.O
         transaction.addToBackStack(null);
         //Commit the transaction
         transaction.commit();
+    }
+
+    @Override
+    public void onLevelSelectBack() {
+        welcomeScreen();
     }
 
     @Override
